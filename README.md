@@ -7,6 +7,38 @@ Python16开发班项目示例
 软件架构说明
 
 
+####项目目录结构
+web
+├── manage.py
+├── myadmin
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── migrations
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── myhome
+│   ├── admin.py
+│   ├── apps.py
+│   ├── __init__.py
+│   ├── migrations
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── static
+├── templates
+└── web
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+
+
+
+
 #### 安装教程
 
 1. xxxx
