@@ -36,6 +36,25 @@ web
     ├── urls.py
     └── wsgi.py
 
+在项目中头像上传时,使用的地址
+为什么有些地方写 /static/uploads/
+有些地方写 ./static/uploads/
+甚至  /home/yc/py16/py16-project/web/static/uploads/
+
+地址的使用,分两种情况
+一种是系统的文件操作 可以使用 ./static/uploads/ 或者 /home/yc/py16/py16-project/web/static/uploads/
+
+一种是给服务器使用,浏览器访问时使用 /static/uploads/ 因为此处 / 代表当前服务器地址 http://127.0.0.1:8000
+
+127.0.0.1
+locahost
+
+location.href = /index/
+
+
+分页优化解决方案
+
+1,自定义模板标签
 
 
 

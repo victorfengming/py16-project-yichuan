@@ -1,7 +1,7 @@
 {% extends 'myadmin/index.html' %}
 
 {% block title %}
-<title>后台会员添加</title>
+<title>后台会员编辑</title>
 {% endblock %}
 
 
@@ -12,7 +12,7 @@
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
                     <div class="widget-title am-fl">
-                        会员添加
+                        会员编辑
                     </div>
                     <div class="widget-function am-fr">
                         <a href="javascript:;" class="am-icon-cog">
@@ -20,14 +20,14 @@
                     </div>
                 </div>
                 <div class="widget-body am-fr">
-                    <form action="{% url 'myadmin_user_insert' %}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                    <form action="{% url 'myadmin_user_edit' %}?uid={{ uinfo.id }}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
                         {% csrf_token %}
                         <div class="am-form-group">
                             <label for="user-name" class="am-u-sm-3 am-form-label">
                                 昵称
                             </label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="nikename" class="tpl-form-input" 
+                                <input type="text" name="nikename" value="{{ uinfo.nikename }}" class="tpl-form-input" 
                                  placeholder="请输入昵称">
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             </label>
                             <div class="am-u-sm-9">
                                 <input type="password" name="password"  class="tpl-form-input" 
-                                 placeholder="请输入密码">
+                                 placeholder="如果不需要修改密码,则不用填写">
                             </div>
                         </div>
                         <div class="am-form-group">
@@ -45,7 +45,7 @@
                               手机号
                             </label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="phone"  class="tpl-form-input" 
+                                <input type="text" name="phone"  value="{{ uinfo.phone }}" class="tpl-form-input" 
                                  placeholder="请输入手机号">
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                               邮箱
                             </label>
                             <div class="am-u-sm-9">
-                                <input type="email" name="email"  class="tpl-form-input" 
+                                <input type="email" name="email" value="{{ uinfo.email }}"  class="tpl-form-input" 
                                  placeholder="请输入email">
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                               年龄
                             </label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="age"  class="tpl-form-input" 
+                                <input type="number" name="age" value="{{ uinfo.age }}"  class="tpl-form-input" 
                                  placeholder="请输入年龄">
                             </div>
                         </div>
@@ -74,8 +74,8 @@
                               性别
                             </label>
                             <div class="am-u-sm-9">
-                                <label class="am-radio-inline"><input type="radio" value="0" name="sex"> 女</label>
-                                <label class="am-radio-inline"><input type="radio" value="1" name="sex"> 男</label>
+                                <label class="am-radio-inline"><input type="radio" value="0" {% if uinfo.sex == '0' %} checked {% endif %} name="sex"> 女</label>
+                                <label class="am-radio-inline"><input type="radio" value="1" {% if uinfo.sex == '1' %} checked {% endif %} name="sex"> 男</label>
                             </div>
                         </div>
                       
@@ -89,12 +89,12 @@
                             <div class="am-u-sm-9">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img src="assets/img/a5.png" alt="">
+                                        <img src="{{ uinfo.pic_url }}" width="200" alt="">
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-sm">
                                         <i class="am-icon-cloud-upload">
                                         </i>
-                                        添加封面图片
+                                        编辑封面图片
                                     </button>
                                     <input id="doc-form-file" name="pic" type="file" multiple="">
                                 </div>
