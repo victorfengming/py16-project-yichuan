@@ -58,6 +58,7 @@
                                     <th>ID</th>
                                     <th>分类名</th>
                                     <th>所属父级</th>
+                                    <th>该类下的商品数量</th>
                                     <th>Path路径</th>
                                     <th>操作</th>
                                 </tr>
@@ -68,13 +69,15 @@
                                     <td class="am-text-middle">{{ v.id }}</td>
                                     <td class="am-text-middle cate_name">{{ v.sub }}<span cid="{{ v.id }}">{{ v.name }}</span></td>
                                     <td class="am-text-middle">{{ v.pname }}</td>
+                                    <td class="am-text-middle">{{ v.goods_set.count|default:'无' }}</td>
                                     <td class="am-text-middle">{{ v.path }}</td>
                                     
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                             <a href="javascript:void(0)" cid="{{ v.id }}" class="removeCate tpl-table-black-operation-del">
+                                            <a href="javascript:void(0)" cid="{{ v.id }}" class="removeCate tpl-table-black-operation-del">
                                                 <i class="am-icon-pencil"></i> 删除
                                             </a>
+
                                         </div>
                                     </td>
                                 </tr>

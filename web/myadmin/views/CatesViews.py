@@ -41,7 +41,7 @@ def cate_add(request):
         data['pid'] = request.POST.get('pid')
 
         # 判断是否为顶级分类
-        if data['pid'] == 0:
+        if data['pid'] == '0':
             data['path'] = '0,'
         else:
             # 获取当前父级的path路径,
