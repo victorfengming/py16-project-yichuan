@@ -66,7 +66,6 @@ def cate_add(request):
         return render(request,'myadmin/cates/add.html',context)
 
 
-
 # 分类删除
 def cate_del(request):
     cid = request.GET.get('cid')
@@ -83,8 +82,6 @@ def cate_del(request):
     ob = Cates.objects.get(id=cid)
     ob.delete()
     return JsonResponse({'msg':'删除成功','code':0})
-
-
 
 
 # 分类 名字修改

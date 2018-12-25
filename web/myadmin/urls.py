@@ -4,6 +4,11 @@ from . views import IndexViews,UsersViews,CatesViews,GoodsViews
 urlpatterns = [
     url(r'^$',IndexViews.index,name="myadmin_index"),
 
+    # 登录页
+    url(r'^login/$',IndexViews.myadmin_login,name="myadmin_login"),
+    url(r'^dologin/$',IndexViews.myadmin_dologin,name="myadmin_dologin"),
+    url(r'^logout/$',IndexViews.myadmin_logout,name="myadmin_logout"),
+    url(r'^verifycode/$',IndexViews.verifycode,name="myadmin_vcode"),
 
     # 会员管理
     url(r'^user/add/$',UsersViews.user_add,name="myadmin_user_add"),

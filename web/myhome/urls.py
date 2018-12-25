@@ -1,6 +1,28 @@
 from django.conf.urls import url
-from . import views
+from . views import IndexViews,LoginViews
 
 urlpatterns = [
-    url(r'^',views.index,name="myhome_index"),
+    # 首页
+    url(r'^$',IndexViews.myhome_index,name="myhome_index"),
+    # 列表
+    url(r'^list/(?P<cid>[0-9]+)',IndexViews.myhome_list,name="myhome_list"),
+    # 详情
+    url(r'^info/',IndexViews.myhome_info,name="myhome_info"),
+
+    # 登录
+    url(r'^login/',LoginViews.myhome_login,name="myhome_login"),
+    url(r'^dologin/',LoginViews.myhome_dologin,name="myhome_dologin"),
+    url(r'^logout/',LoginViews.myhome_logout,name="myhome_logout"),
+    # 注册
+    url(r'^register/',LoginViews.myhome_register,name="myhome_register"),
+    url(r'^doregister/',LoginViews.myhome_doregister,name="myhome_doregister"),
+    # 短信发送
+    url(r'^sendMsg/',LoginViews.myhome_sendMsg,name="myhome_sendMsg"),
+
+    # 购物车 增 删 改 查
+
+    # 订单  确认订单,提交订单,订单支付
+
+    # 个人中心  我的订单 个人信息 地址管理
+
 ]

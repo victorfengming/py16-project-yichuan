@@ -2,6 +2,8 @@ from django import template
 register = template.Library()
 
 from django.utils.html import format_html
+from myadmin.models import Cates
+from django.core.urlresolvers import reverse
 
 # 自定义过滤器
 # @register.filter
@@ -18,6 +20,24 @@ from django.utils.html import format_html
 #     res = float(var1) * float(var2)
 
 #     return '%.2f'%res
+
+# 自定义模板导航数据 标签
+@register.simple_tag
+def showNav():
+    # 获取一级分类
+    CatesList = Cates.objects.filter(pid=0)
+    # print(CatesList)
+    s = ''
+    for x in CatesList:
+        s += '''
+        <li class="layout-header-nav-item">
+          <a href="{url}" class="layout-header-nav-link">{name}</a>
+        </li>
+        '''.format(name=x.name,url=reverse('myhome_list',args=(x.id,)))
+
+    return format_html(s)
+
+
 
 
 # 自定义分页标签

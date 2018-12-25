@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 自定义登录检测的中间件
+    'myadmin.AdminMiddleware.AdminLoginMiddleware',
 ]
 
 ROOT_URLCONF = 'web.urls'
