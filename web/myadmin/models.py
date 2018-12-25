@@ -48,6 +48,14 @@ class Goods(models.Model):
 
 
 
+# 购物车 模型
+class Cart(models.Model):
+    # id  用户 uid   商品 goodsid 数量 num
+    uid = models.ForeignKey(to="Users", to_field="id")
+    goodsid = models.ForeignKey(to="Goods", to_field="id")
+    num = models.IntegerField()
+
+
 
 
 

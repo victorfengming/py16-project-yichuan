@@ -536,5 +536,27 @@
   appTopNav();
   //数量增加减少 
   addMin();
+
+  // 绑定加入购物车单击事件
+  $('#J_btnAddCart').click(function(){
+    // 检测是否登录
+    var isLogin = '{{ request.session.VipUser.uid }}'
+    if(!isLogin){
+      alert('请先登录');
+      location.href="/login/";
+    }
+
+    // 获取 商品id  获取数量
+    var data = {}
+    data.goodsid = {{ goods.id }}
+    data.num = $('#J_quantity').val()
+    // 发送ajax.加入到购物车
+    $.get('{% url 'myhome_cart_add' %}',data,function(data){
+        alert(data['msg'])
+    },'json')
+
+
+  })
+
 </script>
 {% endblock %}

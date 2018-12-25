@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . views import IndexViews,LoginViews
+from . views import IndexViews,LoginViews,CartViews
 
 urlpatterns = [
     # 首页
@@ -20,6 +20,11 @@ urlpatterns = [
     url(r'^sendMsg/',LoginViews.myhome_sendMsg,name="myhome_sendMsg"),
 
     # 购物车 增 删 改 查
+    url(r'^cart/add/',CartViews.myhome_cart_add,name="myhome_cart_add"),
+    url(r'^cart/index/',CartViews.myhome_cart_index,name="myhome_cart_index"),
+    url(r'^cart/del/',CartViews.myhome_cart_del,name="myhome_cart_del"),
+    url(r'^cart/clear/',CartViews.myhome_cart_clear,name="myhome_cart_clear"),
+    url(r'^cart/edit/',CartViews.myhome_cart_edit,name="myhome_cart_edit"),
 
     # 订单  确认订单,提交订单,订单支付
 
