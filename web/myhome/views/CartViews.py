@@ -40,16 +40,43 @@ def myhome_cart_index(request):
     # 加载模板
     return render(request,'myhome/cart/index.html',context)
 
+
+# 购物车商品的删除
 def myhome_cart_del(request):
+    try:
+        # cartid 
+        cartid = request.GET.get('cartid')
+        # 获取当前购物车商品对象
+        ob = Cart.objects.get(id=cartid)
+        # 执行删除
+        ob.delete()
+        return JsonResponse({'code':0,'msg':'删除成功'})
+    except:
+        pass
 
-    return HttpResponse('myhome_cart_del')
+    return JsonResponse({'code':1,'msg':'删除失败'})
 
+
+
+# 购物车商品数量的修改
+def myhome_cart_edit(request):
+    try:
+        cartid = request.GET.get('cartid')
+        num = request.GET.get('num')
+        # 根据id获取购物车对象
+        ob = Cart.objects.get(id=cartid)
+        ob.num = num
+        ob.save()
+        return JsonResponse({'code':0,'msg':'修改成功'})
+    except:
+        pass
+
+    return JsonResponse({'code':1,'msg':'修改失败'})
+
+
+# 购物车商品的清空
 def myhome_cart_clear(request):
 
     return HttpResponse('myhome_cart_clear')
-
-def myhome_cart_edit(request):
-
-    return HttpResponse('myhome_cart_edit')
 
 

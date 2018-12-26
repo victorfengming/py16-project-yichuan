@@ -9,7 +9,7 @@
 
 
 {% block con %}
- <div class="mainbody cart">
+ <div class="mainbody cart" style="padding-top: 70px;">
     <div class="container">
       <!-- 购物车详情头 -->
       <table class="cart-header">
@@ -17,7 +17,7 @@
           <tr>
             <td class="cart-col-select col-md-3 col-xs-3 col-sm-3">
               <div class="cart-select-all JSelectAll">
-                <div class="mz-checkbox"></div>
+                
                 <span class="cart-select-title">全选</span>
               </div>
             </td>
@@ -38,7 +38,7 @@
             {% for v in cartdata %}
               <tr class="cart-product">
                 <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">  
-                  <div class="mz-checkbox "></div> 
+                  <div class="mz-checkbox " cartid="{{ v.id }}"></div> 
                   <a href="meilanx.html" class="cart-product-link" target="_blank">
                     <img src="{{ v.goodsid.pic_url }}" class="cart-product-img" alt="魅蓝 X">
                   </a>
@@ -59,17 +59,19 @@
                   <div class="cart-product-number-adder">
                     <p class="cart-product-number-max show"></p>
                     <div class="mz-adder">
-                      <button class="mz-adder-subtract disabled"></button>
-                      <div class="mz-adder-num"><input class="mz-adder-input" value="{{ v.num }}" type="text"></div>
+                      <button class="mz-adder-subtract"></button>
+                      <div class="mz-adder-num"><input price="{{ v.goodsid.price }}" cartid="{{ v.id }}" class="mz-adder-input" value="{{ v.num }}" type="text"></div>
                       <button class="mz-adder-add"></button>
                     </div>
                   </div>
                 </td>
                 <td class="cart-col-total col-md-1 hidden-xs hidden-sm">
-                  <span class="cart-product-price total">{%  widthratio v.goodsid.price 1 v.num  %}</span>
+
+                  {% load pagetag %}
+                  <span class="cart-product-price total">{%  cheng v.num v.goodsid.price %}</span>
                 </td>
                 <td class="cart-col-ctrl col-md-1 hidden-xs hidden-sm">
-                  <div class="cart-product-remove">
+                  <div class="cart-product-remove" cartid="{{ v.id }}">
                     <span class="glyphicon glyphicon-remove"></span>
                   </div>
                 </td>
@@ -100,7 +102,7 @@
             <span class="cart-footer-text">已优惠</span>
             <span class="cart-footer-num red" id="totalDiscount">0.00</span>
             <span class="cart-footer-text">元， 合计(不含运费)：</span>
-            <span class="cart-footer-total" id="totalPrice"></span>
+            <span class="cart-footer-total" id="totalPrice">0.00</span>
           </span>
           <div class="mz-btn success" id="cartSubmit">去结算</div>
         </div>
@@ -110,5 +112,142 @@
 <!-- 主内容区域 E-->
 
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    //回顶部
+    backTop();
+    //全选
+    allSelect();
+
+    // 点击结算
+    $('#cartSubmit').click(function(){
+      // 是否选择了购买的商品
+      var cartids = TotalNum()
+      if(cartids.length == 0){
+        alert('请先选择要购买的商品')
+        return;
+      }
+
+      location.href="{% url 'myhome_order_confirm'%}?cartids="+cartids
+
+
+    })
+
+    //选择框操作
+    function allSelect(){
+      var aee = false;
+      var see = false;
+      // 全选
+      $('.JSelectAll .mz-checkbox').click(function(){
+        if(aee==false){
+          $(this).addClass('checked');
+          $('.cart-col-select .mz-checkbox').addClass('checked');
+          aee = true;
+        }else if(aee==true){
+          $(this).removeClass('checked');
+          $('.cart-col-select .mz-checkbox').removeClass('checked');
+          aee = false;
+        }
+        TotalNum()
+      })
+
+      //单选
+      $('.cart-col-select .mz-checkbox').click(function(){
+        if(see==false){
+          $(this).addClass('checked');
+          see = true;
+        }else if(see==true){
+          $(this).removeClass('checked');
+          see = false;
+        }
+        TotalNum()
+      })
+    }
+
+    // 计算总价和购买总数的方法
+    function TotalNum(){
+      var cartids = []
+      var TotalPrice = 0
+      var CountNum = 0
+      // 获取页面中所有的选框
+      $('table').find('.checked').each(function(){
+        // 获取当前选中的元素的 小计价格 和数量
+        TotalPrice += Number($(this).parents('tr').find('.total').text())
+        CountNum += Number($(this).parents('tr').find('.mz-adder-input').val())
+        cartids.push( $(this).attr('cartid'))
+      })
+      // console.log(TotalPrice,CountNum)
+      $('#totalCount').text(CountNum)
+      $('#totalPrice').text(toDecimal2(TotalPrice))
+      return cartids
+    }
+
+
+    // 购物车商品的删除
+    $('.cart-product-remove').click(function(){
+      // 获取当前要删除的购物车的id
+      var cartid = $(this).attr('cartid')
+      // 发送ajax请求,删除数据
+      $.get('{% url 'myhome_cart_del' %}',{'cartid':cartid},function(data){
+        alert(data.msg)
+        TotalNum()
+      },'json')
+
+    })
+
+    // 数量更新
+    $('.mz-adder-subtract').click(function(){
+      // 数量减少
+      var inp = $(this).parents('.mz-adder').find('.mz-adder-input')
+      var cartid = inp.attr('cartid')
+      var num = Number(inp.val())
+      if(num <= 1){
+        num = 1
+        return;
+      }
+      num --
+      // 调用函数,修改数据
+      RequestCartNum(cartid,num)
+      inp.val(num)
+      inp.val(num)
+      var price = inp.attr('price')
+      var total =  toDecimal2(num * price)
+      $(this).parents('tr').find('.total').text(total)
+      TotalNum()
+
+    })
+    $('.mz-adder-add').click(function(){
+      // 数量增加
+      var inp = $(this).parents('.mz-adder').find('.mz-adder-input')
+      var cartid = inp.attr('cartid')
+      var num = Number(inp.val())
+      num ++
+      // 调用函数,修改数据
+      RequestCartNum(cartid,num)
+      inp.val(num)
+      var price = inp.attr('price')
+      var total = toDecimal2(num * price)
+      $(this).parents('tr').find('.total').text(total)
+      TotalNum()
+
+    })
+
+
+    // 封装函数,发送ajax请求,修改购物车商品的购买数量
+    function RequestCartNum(cartid,num){
+      $.get('{% url 'myhome_cart_edit' %}',{'cartid':cartid,'num':num},function(data){
+        alert(data.msg)
+      },'json')
+    }
+
+
+
+
+
+</script>
+
+{% endblock %}
+
 
 

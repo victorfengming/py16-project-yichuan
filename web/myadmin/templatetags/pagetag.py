@@ -14,12 +14,12 @@ from django.core.urlresolvers import reverse
 
 
 
-# # 自定义乘法运算标签
-# @register.simple_tag
-# def cheng(var1,var2):
-#     res = float(var1) * float(var2)
+# 自定义乘法运算标签
+@register.simple_tag
+def cheng(var1,var2):
+    res = float(var1) * float(var2)
 
-#     return '%.2f'%res
+    return '%.2f'%res
 
 # 自定义模板导航数据 标签
 @register.simple_tag

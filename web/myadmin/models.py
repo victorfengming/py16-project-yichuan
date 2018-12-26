@@ -56,6 +56,38 @@ class Cart(models.Model):
     num = models.IntegerField()
 
 
+# 订单
+class Order(models.Model):
+    uid = models.ForeignKey(to="Users", to_field="id")
+    username = models.CharField(max_length=20)
+    phone = models.CharField(max_length=11)
+    address = models.CharField(max_length=255)
+    totalprice = models.FloatField()
+    # 0 未支付, 1已支付, 2已发货  3已收货  4已评价  5取消 ...
+    status = models.IntegerField(default=0)
+    # 0 支付宝  1 微信 2 银联  3 其它  4货到付款...
+    paytype = models.IntegerField(default=0)
+    addtime = models.DateTimeField(auto_now_add=True)
+    paytime = models.DateTimeField(null=True)
+
+
+# 订单详情
+class OrderInfo(models.Model):
+    orderid = models.ForeignKey(to="Order", to_field="id")
+    goodsid = models.ForeignKey(to="Goods", to_field="id")
+    num = models.IntegerField()
+
+'''
+# 订单
+    id订单号 uid用户 收货人,收货地址,收货电话,总价,状态 支付方式 ,下单时间,支付时间
+    100011       189     
+# 订单详情
+    orderid   goodsid   num  price购买时的单价
+    100011     12       1
+    100011     18       3
+'''
+
+
 
 
 

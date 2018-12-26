@@ -1,4 +1,25 @@
   /*公共导航部分--------------------------------------*/
+    //制保留2位小数，如：2，会在2后面补上00.即2.00 
+  function toDecimal2(x) { 
+    var f = parseFloat(x); 
+    if (isNaN(f)) { 
+      return false; 
+    } 
+    var f = Math.round(x*100)/100; 
+    var s = f.toString(); 
+    var rs = s.indexOf('.'); 
+    if (rs < 0) { 
+      rs = s.length; 
+      s += '.'; 
+    } 
+    while (s.length <= rs + 2) { 
+      s += '0'; 
+    } 
+    return s; 
+  } 
+
+
+
   //顶部导航鼠标经过出现内容
   function topNav(){
     for(var i =1;i<5;i++){
@@ -126,34 +147,6 @@
 
 /*购物车--------------------------------------------*/ 
 
-//选择框操作
-function allSelect(){
-  var aee = false;
-  var see = false;
-  // 全选
-  $('.JSelectAll .mz-checkbox').click(function(){
-    if(aee==false){
-      $(this).addClass('checked');
-      $('.cart-col-select .mz-checkbox').addClass('checked');
-      aee = true;
-    }else if(aee==true){
-      $(this).removeClass('checked');
-      $('.cart-col-select .mz-checkbox').removeClass('checked');
-      aee = false;
-    }
-  })
-
-  //单选
-  $('.cart-col-select .mz-checkbox').click(function(){
-    if(see==false){
-      $(this).addClass('checked');
-      see = true;
-    }else if(see==true){
-      $(this).removeClass('checked');
-      see = false;
-    }
-  })
-}
 
 // 数量增加减少
 function cartAddMin(){
