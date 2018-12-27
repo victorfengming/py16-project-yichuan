@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^order/confirm/',OrderViews.myhome_order_confirm,name="myhome_order_confirm"),
     url(r'^order/create/',OrderViews.myhome_order_create,name="myhome_order_create"),
     url(r'^order/pay/',OrderViews.myhome_order_pay,name="myhome_order_pay"),
+    # 支付的回调地址 order/pay_result/
+    url(r'^order/pay_result/',OrderViews.myhome_pay_result,name="myhome_pay_result"),
+
 
     # 个人中心  我的订单 个人信息 地址管理
     url(r'^center/order/',CenterViews.myhome_center_order,name="myhome_center_order"),
