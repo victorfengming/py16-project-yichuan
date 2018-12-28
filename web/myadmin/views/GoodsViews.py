@@ -7,8 +7,11 @@ from . UsersViews import uploads_pic
 from .. models import Cates,Goods
 
 # Create your views here.
+from django.contrib.auth.decorators import permission_required
+
 
 # 商品添加 表单
+@permission_required('myadmin.create_Goods',raise_exception=True)
 def goods_add(request):
 
     # 获取当前所有的分类数据
@@ -19,6 +22,7 @@ def goods_add(request):
     # 显示一个添加的表单
     return render(request,'myadmin/goods/add.html',context)
 
+@permission_required('myadmin.create_Goods',raise_exception=True)
 def goods_insert(request):
     try:
     
@@ -46,7 +50,7 @@ def goods_insert(request):
     return HttpResponse('<script>alert("商品添加失败");history.back(-1);";</script>')
 
 
-
+@permission_required('myadmin.show_Goods',raise_exception=True)
 def goods_index(request):
     
     # 获取所有的商品对象

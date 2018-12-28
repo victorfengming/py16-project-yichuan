@@ -204,15 +204,42 @@
             <!-- 菜单 -->
             <ul class="sidebar-nav">
                 
+                
                 <li class="sidebar-nav-link">
                     <a href="index.html" class="active">
                         <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
                     </a>
-             
-
+                </li>
+                    
+                {% if request.user.is_superuser %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-users sidebar-nav-link-logo"></i> 
+                        权限管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="{% url 'myadmin_authuser_index' %}">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
+                                管理员
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="{% url 'myadmin_authgroup_index' %}">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span>
+                                权限组
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if request.user.is_superuser or 'myadmin.show_User' in perms %}
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-user sidebar-nav-link-logo"></i> 
                         会员管理
                         <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                     </a>
@@ -232,7 +259,9 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
 
+                {% if request.user.is_superuser or 'myadmin.show_Cates' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-table sidebar-nav-link-logo"></i> 
@@ -255,7 +284,9 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
 
+                {% if request.user.is_superuser or 'myadmin.show_Goods' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-shopping-bag sidebar-nav-link-logo"></i> 
@@ -278,7 +309,9 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
 
+                {% if request.user.is_superuser or 'myadmin.show_Order' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-table sidebar-nav-link-logo"></i> 
@@ -294,6 +327,7 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
                 
                
 

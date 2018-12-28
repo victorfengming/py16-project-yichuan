@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 
 # Create your views here.
 from .. models import Cates
+from django.contrib.auth.decorators import permission_required
+
 
 # 封装函数.格式化获取分类数据
 def get_cates_all():
@@ -24,6 +26,7 @@ def get_cates_all():
     return data
 
 # 分类 列表
+@permission_required('myadmin.show_Cates',raise_exception=True)
 def cate_index(request):
     # 获取数据
     data = get_cates_all()
@@ -33,6 +36,7 @@ def cate_index(request):
     return render(request,'myadmin/cates/index.html',context)
 
 # 分类 添加
+@permission_required('myadmin.create_Cates',raise_exception=True)
 def cate_add(request):
     if request.method == 'POST':
         # 接受数据
@@ -67,6 +71,7 @@ def cate_add(request):
 
 
 # 分类删除
+@permission_required('myadmin.remove_Cates',raise_exception=True)
 def cate_del(request):
     cid = request.GET.get('cid')
     # 判断当前分类下是否还有子类
@@ -85,6 +90,7 @@ def cate_del(request):
 
 
 # 分类 名字修改
+@permission_required('myadmin.edit_Cates',raise_exception=True)
 def cate_edit(request):
     try:
         # 获取 参数

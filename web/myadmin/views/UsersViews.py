@@ -8,11 +8,14 @@ from web.settings import BASE_DIR
 
 import os
 
+from django.contrib.auth.decorators import permission_required
+
 
 # Create your views here.
 # 用户模型的管理
 
 # 会员列表
+@permission_required('myadmin.show_User',raise_exception=True)
 def user_index(request):
 
     # 获取所有用户数据
@@ -49,10 +52,12 @@ def user_index(request):
 
 
 # 会员添加表单
+@permission_required('myadmin.create_User',raise_exception=True)
 def user_add(request):
     return render(request,'myadmin/users/add.html')
 
 # 会员执行添加
+@permission_required('myadmin.create_User',raise_exception=True)
 def user_insert(request):
     # 接收表单数据
     data = request.POST.dict()
@@ -82,6 +87,7 @@ def user_insert(request):
 
 
 # 会员编辑
+@permission_required('myadmin.edit_User',raise_exception=True)
 def user_edit(request):
     # 接受会员id
     uid = request.GET.get('uid')

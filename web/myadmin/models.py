@@ -21,12 +21,31 @@ class Users(models.Model):
     status = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True)
 
+    # 自定义 会员管理 权限
+    class Meta:
+        permissions = (
+            ("show_Users", "查看用户列表权限"),
+            ("create_Users", "添加用户信息权限"),
+            ("edit_Users", "修改用户信息权限"),
+            ("remove_Users", "删除用户信息权限"),
+        )
+
+
 
 # 商品分类模型
 class Cates(models.Model):
     name = models.CharField(max_length=20)
     pid = models.IntegerField()
     path = models.CharField(max_length=50)
+
+    # 自定义 商品分类管理 权限
+    class Meta:
+        permissions = (
+            ("show_Cates", "查看分类列表权限"),
+            ("create_Cates", "添加分类信息权限"),
+            ("edit_Cates", "修改分类信息权限"),
+            ("remove_Cates", "删除分类信息权限"),
+        )
 
 # 商品模型
 class Goods(models.Model):
@@ -44,6 +63,16 @@ class Goods(models.Model):
     # 0 新品,1热卖,2推荐,3下架
     status = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True)
+
+    # 自定义 商品管理 权限
+    class Meta:
+        permissions = (
+            ("show_Goods", "查看商品列表权限"),
+            ("create_Goods", "添加商品信息权限"),
+            ("edit_Goods", "修改商品信息权限"),
+            ("remove_Goods", "删除商品信息权限"),
+        )
+
 
 
 
@@ -69,6 +98,16 @@ class Order(models.Model):
     paytype = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True)
     paytime = models.DateTimeField(null=True)
+
+    # 自定义 订单 权限
+    class Meta:
+        permissions = (
+            ("show_Order", "查看订单列表权限"),
+            ("create_Order", "添加订单信息权限"),
+            ("edit_Order", "修改订单信息权限"),
+            ("remove_Order", "删除订单信息权限"),
+        )
+
 
 
 # 订单详情
